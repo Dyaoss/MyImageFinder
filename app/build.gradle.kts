@@ -54,6 +54,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.6.0")
     implementation("com.google.code.gson:gson:2.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation("androidx.fragment:fragment-ktx:1.8.2")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
