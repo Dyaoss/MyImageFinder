@@ -10,7 +10,7 @@ import com.example.myimagefinder.databinding.RecyclerviewItemBinding
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
-class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
+class ImageListAdapter(var itemData: MutableList<KakaoImageData>) :
     RecyclerView.Adapter<ImageListAdapter.ImageViewHolder>() {
 
     interface ItemClick {
@@ -54,5 +54,11 @@ class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
+    }
+
+    fun setData(data: MutableList<KakaoImageData>) {
+        itemData = data
+        notifyDataSetChanged()
+
     }
 }
