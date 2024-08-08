@@ -25,6 +25,7 @@ class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
         val ivThumnailView = binding.itemImage
         val tvSitename = binding.itemSiteName
         val tvImageDate = binding.itemDate
+        val ivlike = binding.ivLike
 
         fun bind(data: KakaoImageData) {
             Glide.with(itemView.context)
@@ -33,6 +34,7 @@ class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
             tvSitename.text = data.siteName
             tvImageDate.text = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 .format(OffsetDateTime.parse(data.dateTime))
+            ivlike.bringToFront()
         }
     }
 

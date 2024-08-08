@@ -1,7 +1,6 @@
 package com.example.myimagefinder.Fragment
 
 import android.content.Context
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -10,10 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myimagefinder.Adapter.ImageListAdapter
 import com.example.myimagefinder.Retrofit.ImageResponse
+import com.example.myimagefinder.Retrofit.KakaoImageData
 import com.example.myimagefinder.Retrofit.RetrofitClient
 import com.example.myimagefinder.databinding.FragmentImageBinding
 import retrofit2.Call
@@ -27,6 +27,7 @@ class ImageFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var adapter: ImageListAdapter
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,14 +55,35 @@ class ImageFragment : Fragment() {
             false
         })
 
+        loadWord()
 
         binding.btnSearch.setOnClickListener {
             val searching = binding.etSearch.text.toString()
             searchKakaoAPI(searching)
             hideKeyBoard()
+            saveWord(searching)
+        }
+
+        binding.imageRecyclerview.setOnClickListener {
+            Log.d("imageclick", "이미지 클릭됨")
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().recreate() // 뒤로가기 버튼 누르면 초기화
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
 
     private fun searchKakaoAPI(query: String) {
         val call = RetrofitClient.api.getImgData(query)
@@ -95,6 +117,17 @@ class ImageFragment : Fragment() {
         input.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
+    private fun saveWord(word: String) {
+        val sharedPref = requireContext().getSharedPreferences("pref", 0)
+        val edit = sharedPref.edit()
+        edit.putString("lastSearchWord", word)
+        edit.apply()
+    }
+
+    private fun loadWord() {
+        val sharedPref = requireContext().getSharedPreferences("pref", 0)
+        binding.etSearch.setText(sharedPref.getString("lastSearchWord", ""))
+    }
 }
 
 
