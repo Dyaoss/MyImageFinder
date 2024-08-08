@@ -15,8 +15,4 @@ interface KakaoAPI {
         @Query("query") query: String
     ): Call<ImageResponse>
 
-
-//    fun searchImage(
-//        @Query("query") query: String
-//    ): Call<ImageResponse>
 }

@@ -18,7 +18,6 @@ object RetrofitClient {
                         level = HttpLoggingInterceptor.Level.BODY
                     }).addInterceptor { chain ->
                         val request = chain.request().newBuilder()
-                            .addHeader("Authorization", "KakaoAK 5ae6a3bfb6f94faedb492a3be50c60a3")
                             .build()
                         chain.proceed(request)
                     }

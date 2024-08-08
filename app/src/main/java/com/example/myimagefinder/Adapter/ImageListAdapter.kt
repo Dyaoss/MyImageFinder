@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myimagefinder.Retrofit.KakaoImageData
 import com.example.myimagefinder.databinding.RecyclerviewItemBinding
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 
 class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
     RecyclerView.Adapter<ImageListAdapter.ImageViewHolder>() {
@@ -29,7 +31,8 @@ class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
                 .load(data.thumbnailUrl)
                 .into(ivThumnailView)
             tvSitename.text = data.siteName
-            tvImageDate.text = data.dateTime
+            tvImageDate.text = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                .format(OffsetDateTime.parse(data.dateTime))
         }
     }
 
