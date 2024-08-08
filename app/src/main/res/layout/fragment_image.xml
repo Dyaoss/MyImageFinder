@@ -34,6 +34,7 @@
                     android:layout_height="55dp"
                     android:background="@color/white"
                     android:hint="이미지검색"
+                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btn_search"
                     app:layout_constraintHorizontal_chainStyle="spread"

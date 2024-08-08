@@ -1,25 +1,24 @@
 package com.example.myimagefinder.Fragment
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myimagefinder.Adapter.ImageListAdapter
 import com.example.myimagefinder.Retrofit.ImageResponse
-import com.example.myimagefinder.Retrofit.KakaoAPI
-import com.example.myimagefinder.Retrofit.KakaoImageData
 import com.example.myimagefinder.Retrofit.RetrofitClient
 import com.example.myimagefinder.databinding.FragmentImageBinding
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Query
 
 
 class ImageFragment : Fragment() {
@@ -44,11 +43,25 @@ class ImageFragment : Fragment() {
         adapter = ImageListAdapter(mutableListOf())
         binding.imageRecyclerview.adapter = adapter
 
+        binding.etSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                val searching = binding.etSearch.text.toString()
+                searchKakaoAPI(searching)
+
+                hideKeyBoard()//hide
+                return@OnKeyListener true
+            }
+            false
+        })
+
+
         binding.btnSearch.setOnClickListener {
             val searching = binding.etSearch.text.toString()
             searchKakaoAPI(searching)
+            hideKeyBoard()
         }
     }
+
 
     private fun searchKakaoAPI(query: String) {
         val call = RetrofitClient.api.getImgData(query)
@@ -74,6 +87,12 @@ class ImageFragment : Fragment() {
                 Log.e("SearchFragment", "Request failed", t)
             }
         })
+    }
+
+    private fun hideKeyBoard() {
+        val input: InputMethodManager =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        input.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
 }
