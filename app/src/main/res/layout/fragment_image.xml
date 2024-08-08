@@ -27,8 +27,8 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_input_edit"
+                <EditText
+                    android:id="@+id/et_search"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btn_search"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -41,11 +41,11 @@
 
                 <android.widget.Button
                     android:id="@+id/btn_search"
-                    app:layout_constraintBottom_toBottomOf="@id/text_input_edit"
+                    app:layout_constraintBottom_toBottomOf="@id/et_search"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/text_input_edit"
-                    app:layout_constraintTop_toTopOf="@id/text_input_edit"
+                    app:layout_constraintStart_toEndOf="@+id/et_search"
+                    app:layout_constraintTop_toTopOf="@id/et_search"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:layout_marginStart="5dp"
@@ -58,13 +58,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/image_recyclerview"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_input_layout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"
+            tools:listitem="@layout/recyclerview_item"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
