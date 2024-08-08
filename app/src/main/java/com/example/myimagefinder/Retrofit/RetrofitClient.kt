@@ -1,36 +1,33 @@
 package com.example.myimagefinder.Retrofit
 
-import com.example.myimagefinder.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
+import retrofit2.create
 
 object RetrofitClient {
     private const val BASE_URL = "https://dapi.kakao.com"
 
-    private fun createOkHttpClient(): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor()
-
-        if (BuildConfig.DEBUG)
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
-        else
-            interceptor.level = HttpLoggingInterceptor.Level.NONE
-
-        return OkHttpClient.Builder()
-            .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .writeTimeout(20, TimeUnit.SECONDS)
-            .addNetworkInterceptor(interceptor)
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    }).addInterceptor { chain ->
+                        val request = chain.request().newBuilder()
+                            .addHeader("Authorization", "KakaoAK 5ae6a3bfb6f94faedb492a3be50c60a3")
+                            .build()
+                        chain.proceed(request)
+                    }
+                    .build()
+            )
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(createOkHttpClient())
-        .build()
 
-    val api : KakaoAPI = retrofit.create(KakaoAPI::class.java)
+    val api: KakaoAPI by lazy { retrofit.create() }
 }

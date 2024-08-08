@@ -21,13 +21,15 @@ class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
     inner class ImageViewHolder(binding: RecyclerviewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val ivThumnailView = binding.itemImage
-        val tvSiteUrl = binding.itemSiteUrl
+        val tvSitename = binding.itemSiteName
         val tvImageDate = binding.itemDate
 
         fun bind(data: KakaoImageData) {
-            Glide.with(itemView.context).load(data.thumbnailUrl).into(ivThumnailView)
-            tvSiteUrl.text = data.siteName
-            tvImageDate.text = data.datetime
+            Glide.with(itemView.context)
+                .load(data.thumbnailUrl)
+                .into(ivThumnailView)
+            tvSitename.text = data.siteName
+            tvImageDate.text = data.dateTime
         }
     }
 
