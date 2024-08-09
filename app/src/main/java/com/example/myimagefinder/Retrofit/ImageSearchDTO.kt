@@ -13,5 +13,7 @@ data class KakaoImageData(
     val siteName: String,
     @SerializedName("datetime")
     val dateTime: String,
+
+    var isLiked: Boolean = false
 )
 
