@@ -10,7 +10,7 @@ import com.example.myimagefinder.databinding.RecyclerviewItemBinding
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
-class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
+class ImageListAdapter(var itemData: MutableList<KakaoImageData>) :
     RecyclerView.Adapter<ImageListAdapter.ImageViewHolder>() {
 
     interface ItemClick {
@@ -25,6 +25,7 @@ class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
         val ivThumnailView = binding.itemImage
         val tvSitename = binding.itemSiteName
         val tvImageDate = binding.itemDate
+        val ivlike = binding.ivLike
 
         fun bind(data: KakaoImageData) {
             Glide.with(itemView.context)
@@ -33,6 +34,7 @@ class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
             tvSitename.text = data.siteName
             tvImageDate.text = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 .format(OffsetDateTime.parse(data.dateTime))
+            ivlike.bringToFront()
         }
     }
 
@@ -52,5 +54,11 @@ class ImageListAdapter(val itemData: MutableList<KakaoImageData>) :
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
+    }
+
+    fun setData(data: MutableList<KakaoImageData>) {
+        itemData = data
+        notifyDataSetChanged()
+
     }
 }
