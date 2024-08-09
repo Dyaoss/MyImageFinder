@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.ImageFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,58 +14,62 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout"
             style="@style/TextInputLayoutStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@color/gray">
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="3dp"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:paddingVertical="5dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_input_edit"
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="230dp"
+                    android:layout_height="55dp"
+                    android:background="@color/white"
+                    android:hint="이미지검색"
+                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btn_search"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:hint="이미지검색" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <android.widget.Button
                     android:id="@+id/btn_search"
-                    app:layout_constraintBottom_toBottomOf="@id/text_input_edit"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/text_input_edit"
-                    app:layout_constraintTop_toTopOf="@id/text_input_edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="5dp"
                     android:background="@drawable/border_button"
-                    android:text="검색" />
+                    android:text="검색"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/et_search"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/et_search"
+                    app:layout_constraintTop_toTopOf="@id/et_search" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/image_recyclerview"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:clipToPadding="false"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_input_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp" />
-
+            tools:listitem="@layout/recyclerview_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
