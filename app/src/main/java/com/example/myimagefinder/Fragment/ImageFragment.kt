@@ -101,12 +101,11 @@ class ImageFragment : Fragment() {
                     }
 
                 } else {
-                    Log.e("SearchFragment", "Error: ${response.code()}")
+                    Log.e("ImageFragment", "Error: ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
-                Log.e("SearchFragment", "Request failed", t)
             }
         })
     }
